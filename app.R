@@ -46,37 +46,37 @@ ui <- fluidPage(
             )
         ),
 		"Datasets",
-		tabPanel("Table 1",
+		tabPanel("Curated Ciliome",
 			wellPanel(
 				DT::dataTableOutput("dt_1")
 			)
 		),
-		tabPanel("Table 2",
+		tabPanel("Differentially Expressed Ciliome",
 			wellPanel(
 				DT::dataTableOutput("dt_2")
 			)
 		),
-		tabPanel("Table 3",
+		tabPanel("Tissue Specific Ciliomes",
 			wellPanel(
 				DT::dataTableOutput("dt_3")
 			)
 		),
-		tabPanel("Table 4",
+		tabPanel("DE ciliary genes upregulated in mesenchymal clusters ",
 			wellPanel(
 				DT::dataTableOutput("dt_4")
 			)
 		),
-		tabPanel("Table 5",
+		tabPanel("DE ciliary gene upregulated in epithelial clusters ",
 			wellPanel(
 				DT::dataTableOutput("dt_5")
 			)
 		),
-		tabPanel("Table 6",
+		tabPanel("DE ciliary gene upregulated in both mesenchymal and epithelial clusters ",
 			wellPanel(
 				DT::dataTableOutput("dt_6")
 			)
 		),
-		tabPanel("Table 7",
+		tabPanel("Osteogenic Ciliome",
 			wellPanel(
 				DT::dataTableOutput("dt_7")
 			)
