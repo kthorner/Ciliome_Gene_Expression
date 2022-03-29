@@ -31,7 +31,7 @@ ui <- fluidPage(
 						br(),
 						p("Primary cilia are nearly ubiquitous organelles that transduce molecular and mechanical signals. While the basic structure of the cilium and the cadre of genes that contribute to ciliary formation and function (the ciliome) are believed to be evolutionarily conserved, the presentation of ciliopathies with narrow, tissue-specific phenotypes and specific molecular readouts suggests an unappreciated heterogeneity within this organelle."),
 						br(),
-						p("Herein, we consolidated three established ciliary databases: "),tags$a(href="http://www.syscilia.org/goldstandard.shtml", "The Syscilia Gold standard, ", .noWS = "outside"), tags$a(href="http://www.syscilia.org/goldstandard.shtml", "CiliaCarta, ", .noWS = "outside"), p("and Cildb [1,2] with two ciliogenesis modulator screens [3, 4] to generate a curated ciliome. Expression of genes that make up the ciliome was then profiled across various embryonic tissues and time points to test the hypothesis that the ciliome is heterogenous throughout development."),
+						HTML(paste0(p("Herein, we consolidated three established ciliary databases: "),a(href="http://www.syscilia.org/goldstandard.shtml", "The Syscilia Gold standard, "), a(href="http://www.syscilia.org/goldstandard.shtml", "CiliaCarta, "), p("and Cildb [1,2] with two ciliogenesis modulator screens [3, 4] to generate a curated ciliome. Expression of genes that make up the ciliome was then profiled across various embryonic tissues and time points to test the hypothesis that the ciliome is heterogenous throughout development."))),
 						br(),
 						p("Here, we provide access to our transcriptomics resources detailing tissues-specific ciliome heterogeneity in an easily searchable database."),
 						br(),
