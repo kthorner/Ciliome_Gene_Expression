@@ -93,11 +93,7 @@ ui <- fluidPage(
 		),
 		tabPanel("Neuroectodermal Specific Ciliomes",
 			wellPanel(
-				tabsetPanel(
-					tabPanel("DNT",DT::dataTableOutput("dt_3n_dnt")),
-					tabPanel("VNT",DT::dataTableOutput("dt_3n_vnt")),
-					tabPanel("Both",DT::dataTableOutput("dt_3n_both"))
-				)
+				DT::dataTableOutput("dt_1")
 			)
 		),
 		tabPanel("DE ciliary genes upregulated in mesenchymal clusters",
