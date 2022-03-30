@@ -5,15 +5,33 @@ library(shinyWidgets)
 library(DT)
 library(readxl)
 
-table_1 <- read_excel("data_old/Supplemental File 1_Custom Ciliome 11.17.21.xlsx",skip=7)
-table_2 <- read_excel("data_old/Supplemental File 2_Differentially Expressed Ciliome 1.19.22.manuallycurated.xlsx",skip=7)
+table_1 <- read_excel("data/Supplemental File 1_Custom Ciliome 11.17.21.xlsx",skip=7)
+table_2 <- read_excel("data/Supplemental File 2_Differentially Expressed Ciliome 1.19.22.manuallycurated.xlsx",skip=7)
 
+table_3_tissue_limb <- read_excel("data/Supplemental File 3_DE ciliome by tissue.xlsx",skip=5,sheet=1,range="A6:G16")
+table_3_tissue_neural <- read_excel("data/Supplemental File 3_DE ciliome by tissue.xlsx",skip=5,sheet=1,range="A18:G135")
+table_3_tissue_face <- read_excel("data/Supplemental File 3_DE ciliome by tissue.xlsx",skip=5,sheet=1,range="A137:G184")
+table_3_tissue_limb_face <- read_excel("data/Supplemental File 3_DE ciliome by tissue.xlsx",skip=5,sheet=1,range="A186:G220")
+table_3_tissue_limb_neural <- read_excel("data/Supplemental File 3_DE ciliome by tissue.xlsx",skip=5,sheet=1,range="A222:G234")
+table_3_tissue_neural_face <- read_excel("data/Supplemental File 3_DE ciliome by tissue.xlsx",skip=5,sheet=1,range="A236:G290")
+table_3_tissue_all <- read_excel("data/Supplemental File 3_DE ciliome by tissue.xlsx",skip=5,sheet=1,range="A292:G298")
 
+table_3_craniofacial_mxp <- read_excel("data/Supplemental File 3_DE ciliome by tissue.xlsx",skip=5,sheet=2,range="A6:G21")
+table_3_craniofacial_mnp <- read_excel("data/Supplemental File 3_DE ciliome by tissue.xlsx",skip=5,sheet=2,range="A23:G31")
+table_3_craniofacial_fnp <- read_excel("data/Supplemental File 3_DE ciliome by tissue.xlsx",skip=5,sheet=2,range="A33:G66")
+table_3_craniofacial_mxp_mnp <- read_excel("data/Supplemental File 3_DE ciliome by tissue.xlsx",skip=5,sheet=2,range="A68:G76")
+table_3_craniofacial_mxp_fnp <- read_excel("data/Supplemental File 3_DE ciliome by tissue.xlsx",skip=5,sheet=2,range="A78:G118")
+table_3_craniofacial_fnp_mnp <- read_excel("data/Supplemental File 3_DE ciliome by tissue.xlsx",skip=5,sheet=2,range="A120:G133")
+table_3_craniofacial_all <- read_excel("data/Supplemental File 3_DE ciliome by tissue.xlsx",skip=5,sheet=2,range="A135:G178")
 
-table_4 <- read_excel("data_old/Supplemental File 4_scRNAseq DE Ciliome in mesenchyme clusters.xlsx",skip=7)
-table_5 <- read_excel("data_old/Supplemental File 5_scRNAseq DE Ciliome in Epithelia.xlsx",skip=7)
-table_6 <- read_excel("data_old/Supplemental File 6_scRNAseq DE Ciliome in Epithelia and Mesenchyme.xlsx",skip=7)
-table_7 <- read_excel("data_old/Supplemental File 7_scRNAseq Ciliary Genes with Expression Changes 12.6.21.xlsx",skip=6)
+table_3_neuroectodermal_dnt <- read_excel("data/Supplemental File 3_DE ciliome by tissue.xlsx",skip=5,sheet=3,range="A6:G49")
+table_3_neuroectodermal_vnt <- read_excel("data/Supplemental File 3_DE ciliome by tissue.xlsx",skip=5,sheet=3,range="A51:G75")
+table_3_neuroectodermal_both <- read_excel("data/Supplemental File 3_DE ciliome by tissue.xlsx",skip=5,sheet=3,range="A77:G206")
+
+table_4 <- read_excel("data/Supplemental File 4_scRNAseq DE Ciliome in mesenchyme clusters.xlsx",skip=7)
+table_5 <- read_excel("data/Supplemental File 5_scRNAseq DE Ciliome in Epithelia.xlsx",skip=7)
+table_6 <- read_excel("data/Supplemental File 6_scRNAseq DE Ciliome in Epithelia and Mesenchyme.xlsx",skip=7)
+table_7 <- read_excel("data/Supplemental File 7_scRNAseq Ciliary Genes with Expression Changes 12.6.21.xlsx",skip=6)
 
 ui <- fluidPage(
   
@@ -75,7 +93,11 @@ ui <- fluidPage(
 		),
 		tabPanel("Neuroectodermal Specific Ciliomes",
 			wellPanel(
-				DT::dataTableOutput("dt_1")
+				tabsetPanel(
+					tabPanel("DNT",DT::dataTableOutput("dt_3n_dnt")),
+					tabPanel("VNT",DT::dataTableOutput("dt_3n_vnt")),
+					tabPanel("Both",DT::dataTableOutput("dt_3n_both"))
+				)
 			)
 		),
 		tabPanel("DE ciliary genes upregulated in mesenchymal clusters",
@@ -104,6 +126,23 @@ ui <- fluidPage(
 server <- function(input, output) {
 	output$dt_1 <- DT::renderDataTable({DT::datatable(table_1)})
 	output$dt_2 <- DT::renderDataTable({DT::datatable(table_2)})
+	output$dt_3t_limb <- DT::renderDataTable({DT::datatable(table_3_tissue_limb)})
+	output$dt_3t_neural <- DT::renderDataTable({DT::datatable(table_3_tissue_neural)})
+	output$dt_3t_face <- DT::renderDataTable({DT::datatable(table_3_tissue_face)})
+	output$dt_3t_limb_face <- DT::renderDataTable({DT::datatable(table_3_tissue_limb_face)})
+	output$dt_3t_limb_neural <- DT::renderDataTable({DT::datatable(table_3_tissue_limb_neural)})
+	output$dt_3t_neural_face <- DT::renderDataTable({DT::datatable(table_3_tissue_neural_face)})
+	output$dt_3t_all <- DT::renderDataTable({DT::datatable(table_3_tissue_all)})
+	output$dt_3c_mxp <- DT::renderDataTable({DT::datatable(table_3_craniofacial_mxp)})
+	output$dt_3c_mnp <- DT::renderDataTable({DT::datatable(table_3_craniofacial_mnp)})
+	output$dt_3c_fnp <- DT::renderDataTable({DT::datatable(table_3_craniofacial_fnp)})
+	output$dt_3c_mxp_mnp <- DT::renderDataTable({DT::datatable(table_3_craniofacial_mxp_mnp)})
+	output$dt_3c_mxp_fnp <- DT::renderDataTable({DT::datatable(table_3_craniofacial_mxp_fnp)})
+	output$dt_3c_fnp_mnp <- DT::renderDataTable({DT::datatable(table_3_craniofacial_fnp_mnp)})
+	output$dt_3c_all <- DT::renderDataTable({DT::datatable(table_3_craniofacial_all)})
+	output$dt_3n_dnt <- DT::renderDataTable({DT::datatable(table_3_neuroectodermal_dnt)})
+	output$dt_3n_vnt <- DT::renderDataTable({DT::datatable(table_3_neuroectodermal_vnt)})
+	output$dt_3n_both <- DT::renderDataTable({DT::datatable(table_3_neuroectodermal_both)})
 	output$dt_4 <- DT::renderDataTable({DT::datatable(table_4)})
 	output$dt_5 <- DT::renderDataTable({DT::datatable(table_5)})
 	output$dt_6 <- DT::renderDataTable({DT::datatable(table_6)})
