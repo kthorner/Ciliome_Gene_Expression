@@ -26,7 +26,7 @@ table_3_craniofacial_all <- read_excel("data/Supplemental File 3_DE ciliome by t
 
 table_3_neuroectodermal_dnt <- read_excel("data/Supplemental File 3_DE ciliome by tissue.xlsx",skip=5,sheet=3,range="A6:G49")
 table_3_neuroectodermal_vnt <- read_excel("data/Supplemental File 3_DE ciliome by tissue.xlsx",skip=5,sheet=3,range="A51:G75")
-table_3_neuroectodermal_both <- read_excel("data/Supplemental File 3_DE ciliome by tissue.xlsx",skip=5,sheet=3,range="A77:G206")
+table_3_neuroectodermal_dnt_vnt <- read_excel("data/Supplemental File 3_DE ciliome by tissue.xlsx",skip=5,sheet=3,range="A77:G206")
 
 table_4 <- read_excel("data/Supplemental File 4_scRNAseq DE Ciliome in mesenchyme clusters.xlsx",skip=7)
 table_5 <- read_excel("data/Supplemental File 5_scRNAseq DE Ciliome in Epithelia.xlsx",skip=7)
@@ -43,7 +43,8 @@ ui <- fluidPage(
 	
 	navlistPanel(
 		widths=c(2,10),
-		tabPanel("Home",
+		tabPanel(
+			"Home",
 			fluidRow(
 				column(8,
 					wellPanel(
@@ -83,12 +84,28 @@ ui <- fluidPage(
 		),
 		tabPanel("Tissue Specific Ciliomes",
 			wellPanel(
-				DT::dataTableOutput("dt_1")
+				tabsetPanel(
+					tabPanel("Limb",DT::dataTableOutput("dt_3t_limb")),
+					tabPanel("Neural",DT::dataTableOutput("dt_3t_neural")),
+					tabPanel("Face",DT::dataTableOutput("dt_3t_face")),
+					tabPanel("Limb + Face",DT::dataTableOutput("dt_3t_limb_face")),
+					tabPanel("Limb + Neural",DT::dataTableOutput("dt_3t_limb_neural")),
+					tabPanel("Neural + Face",DT::dataTableOutput("dt_3t_neural_face")),
+					tabPanel("All",DT::dataTableOutput("dt_3t_all"))
+				)
 			)
 		),
 		tabPanel("Craniofacial Specific Ciliomes",
 			wellPanel(
-				DT::dataTableOutput("dt_1")
+				tabsetPanel(
+					tabPanel("MXP",DT::dataTableOutput("dt_3c_mxp")),
+					tabPanel("MNP",DT::dataTableOutput("dt_3c_mnp")),
+					tabPanel("FNP",DT::dataTableOutput("dt_3c_fnp")),
+					tabPanel("MXP + MNP",DT::dataTableOutput("dt_3c_mxp_mnp")),
+					tabPanel("MXP + FNP",DT::dataTableOutput("dt_3c_mxp_fnp")),
+					tabPanel("FNP + MNP",DT::dataTableOutput("dt_3c_fnp_mnp")),
+					tabPanel("All",DT::dataTableOutput("dt_3c_all"))
+				)
 			)
 		),
 		tabPanel("Neuroectodermal Specific Ciliomes",
@@ -96,7 +113,7 @@ ui <- fluidPage(
 				tabsetPanel(
 					tabPanel("DNT",DT::dataTableOutput("dt_3n_dnt")),
 					tabPanel("VNT",DT::dataTableOutput("dt_3n_vnt")),
-					tabPanel("Both",DT::dataTableOutput("dt_3n_both"))
+					tabPanel("DNT + VNT",DT::dataTableOutput("dt_3n_dnt_vnt"))
 				)
 			)
 		),
@@ -142,7 +159,7 @@ server <- function(input, output) {
 	output$dt_3c_all <- DT::renderDataTable({DT::datatable(table_3_craniofacial_all)})
 	output$dt_3n_dnt <- DT::renderDataTable({DT::datatable(table_3_neuroectodermal_dnt)})
 	output$dt_3n_vnt <- DT::renderDataTable({DT::datatable(table_3_neuroectodermal_vnt)})
-	output$dt_3n_both <- DT::renderDataTable({DT::datatable(table_3_neuroectodermal_both)})
+	output$dt_3n_dnt_vnt <- DT::renderDataTable({DT::datatable(table_3_neuroectodermal_dnt_vnt)})
 	output$dt_4 <- DT::renderDataTable({DT::datatable(table_4)})
 	output$dt_5 <- DT::renderDataTable({DT::datatable(table_5)})
 	output$dt_6 <- DT::renderDataTable({DT::datatable(table_6)})
