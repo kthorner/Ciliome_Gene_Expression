@@ -5,15 +5,15 @@ library(shinyWidgets)
 library(DT)
 library(readxl)
 
-table_1 <- read_excel("data/Supplemental File 1_Custom Ciliome 11.17.21.xlsx",skip=7)
-table_2 <- read_excel("data/Supplemental File 2_Differentially Expressed Ciliome 1.19.22.manuallycurated.xlsx",skip=7)
+table_1 <- read_excel("data_old/Supplemental File 1_Custom Ciliome 11.17.21.xlsx",skip=7)
+table_2 <- read_excel("data_old/Supplemental File 2_Differentially Expressed Ciliome 1.19.22.manuallycurated.xlsx",skip=7)
 
 
 
-table_4 <- read_excel("data/Supplemental File 4_scRNAseq DE Ciliome in mesenchyme clusters.xlsx",skip=7)
-table_5 <- read_excel("data/Supplemental File 5_scRNAseq DE Ciliome in Epithelia.xlsx",skip=7)
-table_6 <- read_excel("data/Supplemental File 6_scRNAseq DE Ciliome in Epithelia and Mesenchyme.xlsx",skip=7)
-table_7 <- read_excel("data/Supplemental File 7_scRNAseq Ciliary Genes with Expression Changes 12.6.21.xlsx",skip=6)
+table_4 <- read_excel("data_old/Supplemental File 4_scRNAseq DE Ciliome in mesenchyme clusters.xlsx",skip=7)
+table_5 <- read_excel("data_old/Supplemental File 5_scRNAseq DE Ciliome in Epithelia.xlsx",skip=7)
+table_6 <- read_excel("data_old/Supplemental File 6_scRNAseq DE Ciliome in Epithelia and Mesenchyme.xlsx",skip=7)
+table_7 <- read_excel("data_old/Supplemental File 7_scRNAseq Ciliary Genes with Expression Changes 12.6.21.xlsx",skip=6)
 
 ui <- fluidPage(
   
