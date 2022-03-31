@@ -85,14 +85,13 @@ ui <- fluidPage(
     						tags$li("Arnaiz, O., et al., Cildb: a knowledgebase for centrosomes and cilia. Database (Oxford), 2009. 2009: p. bap022."), 
     						tags$li("Kim, J., et al., Functional genomic screen for modulators of ciliogenesis and cilium length. Nature, 2010. 464(7291): p. 1048-51."),
     						tags$li("Wheway, G., et al., An siRNA-based functional genomics screen for the identification of regulators of ciliogenesis and ciliopathy genes. Nat Cell Biol, 2015. 17(8): p. 1074-1087.")
-    					)
-    				)
-    				wellPanel(
+    					),
+    					br(),
+    					br(),
     					p("Contact us:"),
     					p("Samantha Brugmann, Samantha.Brugmann@cchmc.org")
-    				)
-		    	)
-		    ),
+		    		)
+		    	),
 		    	column(4,
             		img(src = "ciliome_figure.jpg", height = 360, width = 300
             		)
