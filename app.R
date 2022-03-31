@@ -85,7 +85,11 @@ ui <- fluidPage(
     						tags$li("Arnaiz, O., et al., Cildb: a knowledgebase for centrosomes and cilia. Database (Oxford), 2009. 2009: p. bap022."), 
     						tags$li("Kim, J., et al., Functional genomic screen for modulators of ciliogenesis and cilium length. Nature, 2010. 464(7291): p. 1048-51."),
     						tags$li("Wheway, G., et al., An siRNA-based functional genomics screen for the identification of regulators of ciliogenesis and ciliopathy genes. Nat Cell Biol, 2015. 17(8): p. 1074-1087.")
-    					)
+    					),
+    					br(),
+    					br(),
+    					p("Contact us:"),
+    					p("Samantha Brugmann, Samantha.Brugmann@cchmc.org")
 		    		)
 		    	),
 		    	column(4,
@@ -113,13 +117,15 @@ ui <- fluidPage(
 		),
 		tabPanel("Differentially Expressed Ciliome",
 			wellPanel(
-				h5(header_2[1]),
-				h5(header_2[2]),
-				h5(header_2[3]),
-				h5(header_2[4]),
-				h5(header_2[5]),
-				h5(header_2[6]),
-				h5(header_2[7])
+				tags$ul(
+					tags$li(header_2[1]),
+					tags$li(header_2[2]),
+					tags$li(header_2[3]),
+					tags$li(header_2[4]),
+					tags$li(header_2[5]),
+					tags$li(header_2[6]),
+					tags$li(header_2[7])
+				)
 			),
 			wellPanel(
 				DT::dataTableOutput("dt_2")
@@ -127,11 +133,13 @@ ui <- fluidPage(
 		),
 		tabPanel("Tissue Specific Ciliomes",
 			wellPanel(
-				h5(header_3[1]),
-				h5(header_3[2]),
-				h5(header_3[3]),
-				h5(header_3[4]),
-				h5(header_3[5])
+				tags$ul(
+					tags$li(header_3[1]),
+					tags$li(header_3[2]),
+					tags$li(header_3[3]),
+					tags$li(header_3[4]),
+					tags$li(header_3[5])
+				)
 			),
 			wellPanel(
 				tabsetPanel(
@@ -147,11 +155,13 @@ ui <- fluidPage(
 		),
 		tabPanel("Craniofacial Specific Ciliomes",
 			wellPanel(
-				h5(header_3[1]),
-				h5(header_3[2]),
-				h5(header_3[3]),
-				h5(header_3[4]),
-				h5(header_3[5])
+				tags$ul(
+					tags$li(header_3[1]),
+					tags$li(header_3[2]),
+					tags$li(header_3[3]),
+					tags$li(header_3[4]),
+					tags$li(header_3[5])
+				)
 			),
 			wellPanel(
 				tabsetPanel(
@@ -167,11 +177,13 @@ ui <- fluidPage(
 		),
 		tabPanel("Neuroectodermal Specific Ciliomes",
 			wellPanel(
-				h5(header_3[1]),
-				h5(header_3[2]),
-				h5(header_3[3]),
-				h5(header_3[4]),
-				h5(header_3[5])
+				tags$ul(
+					tags$li(header_3[1]),
+					tags$li(header_3[2]),
+					tags$li(header_3[3]),
+					tags$li(header_3[4]),
+					tags$li(header_3[5])
+				)
 			),
 			wellPanel(
 				tabsetPanel(
@@ -183,13 +195,15 @@ ui <- fluidPage(
 		),
 		tabPanel("DE ciliary genes upregulated in mesenchymal clusters",
 			wellPanel(
-				h5(header_4[1]),
-				h5(header_4[2]),
-				h5(header_4[3]),
-				h5(header_4[4]),
-				h5(header_4[5]),
-				h5(header_4[6]),
-				h5(header_4[7])
+				tags$ul(
+					tags$li(header_4[1]),
+					tags$li(header_4[2]),
+					tags$li(header_4[3]),
+					tags$li(header_4[4]),
+					tags$li(header_4[5]),
+					tags$li(header_4[6]),
+					tags$li(header_4[7])
+				)
 			),
 			wellPanel(
 				DT::dataTableOutput("dt_4")
@@ -197,13 +211,15 @@ ui <- fluidPage(
 		),
 		tabPanel("DE ciliary genes upregulated in epithelial clusters",
 			wellPanel(
-				h5(header_5[1]),
-				h5(header_5[2]),
-				h5(header_5[3]),
-				h5(header_5[4]),
-				h5(header_5[5]),
-				h5(header_5[6]),
-				h5(header_5[7])
+				tags$ul(
+					tags$li(header_5[1]),
+					tags$li(header_5[2]),
+					tags$li(header_5[3]),
+					tags$li(header_5[4]),
+					tags$li(header_5[5]),
+					tags$li(header_5[6]),
+					tags$li(header_5[7])
+				)
 			),
 			wellPanel(
 				DT::dataTableOutput("dt_5")
@@ -211,13 +227,15 @@ ui <- fluidPage(
 		),
 		tabPanel("DE ciliary genes upregulated in both mesenchymal and epithelial clusters",
 			wellPanel(
-				h5(header_6[1]),
-				h5(header_6[2]),
-				h5(header_6[3]),
-				h5(header_6[4]),
-				h5(header_6[5]),
-				h5(header_6[6]),
-				h5(header_6[7])
+				tags$ul(
+					tags$li(header_6[1]),
+					tags$li(header_6[2]),
+					tags$li(header_6[3]),
+					tags$li(header_6[4]),
+					tags$li(header_6[5]),
+					tags$li(header_6[6]),
+					tags$li(header_6[7])
+				)
 			),
 			wellPanel(
 				DT::dataTableOutput("dt_6")
@@ -225,12 +243,14 @@ ui <- fluidPage(
 		),
 		tabPanel("Osteogenic Ciliome",
 			wellPanel(
-				h5(header_7[1]),
-				h5(header_7[2]),
-				h5(header_7[3]),
-				h5(header_7[4]),
-				h5(header_7[5]),
-				h5(header_7[6])
+				tags$ul(
+					tags$li(header_7[1]),
+					tags$li(header_7[2]),
+					tags$li(header_7[3]),
+					tags$li(header_7[4]),
+					tags$li(header_7[5]),
+					tags$li(header_7[6])
+				)
 			),
 			wellPanel(
 				DT::dataTableOutput("dt_7")
