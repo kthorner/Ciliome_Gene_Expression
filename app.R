@@ -41,6 +41,9 @@ header_1 <- header_1$...1
 header_2 <- read_excel("data/Supplemental File 2_Differentially Expressed Ciliome 1.19.22.manuallycurated.xlsx",range="A1:A7",col_names=F)
 header_2 <- header_2$...1
 
+header_3 <- read_excel("data/Supplemental File 3_DE ciliome by tissue.xlsx",sheet=1,range="A1:A5",col_names=F)
+header_3 <- header_3$...1
+
 header_4 <- read_excel("data/Supplemental File 4_scRNAseq DE Ciliome in mesenchyme clusters.xlsx",range="A1:A7",col_names=F)
 header_4 <- header_4$...1
 
@@ -122,6 +125,13 @@ ui <- fluidPage(
 		),
 		tabPanel("Tissue Specific Ciliomes",
 			wellPanel(
+				h5(header_3[1]),
+				h5(header_3[2]),
+				h5(header_3[3]),
+				h5(header_3[4]),
+				h5(header_3[5])
+			),
+			wellPanel(
 				tabsetPanel(
 					tabPanel("Limb",DT::dataTableOutput("dt_3t_limb")),
 					tabPanel("Neural",DT::dataTableOutput("dt_3t_neural")),
@@ -135,6 +145,13 @@ ui <- fluidPage(
 		),
 		tabPanel("Craniofacial Specific Ciliomes",
 			wellPanel(
+				h5(header_3[1]),
+				h5(header_3[2]),
+				h5(header_3[3]),
+				h5(header_3[4]),
+				h5(header_3[5])
+			),
+			wellPanel(
 				tabsetPanel(
 					tabPanel("MXP",DT::dataTableOutput("dt_3c_mxp")),
 					tabPanel("MNP",DT::dataTableOutput("dt_3c_mnp")),
@@ -147,6 +164,13 @@ ui <- fluidPage(
 			)
 		),
 		tabPanel("Neuroectodermal Specific Ciliomes",
+			wellPanel(
+				h5(header_3[1]),
+				h5(header_3[2]),
+				h5(header_3[3]),
+				h5(header_3[4]),
+				h5(header_3[5])
+			),
 			wellPanel(
 				tabsetPanel(
 					tabPanel("DNT",DT::dataTableOutput("dt_3n_dnt")),
