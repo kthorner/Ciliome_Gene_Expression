@@ -4,6 +4,8 @@ library(shiny)
 library(shinyWidgets)
 library(DT)
 library(readxl)
+library(tidyxl)
+library(magrittr)
 
 table_1 <- read_excel("data/Supplemental File 1_Custom Ciliome 11.17.21.xlsx",skip=7)
 table_2 <- read_excel("data/Supplemental File 2_Differentially Expressed Ciliome 1.19.22.manuallycurated.xlsx",skip=7)
@@ -32,6 +34,24 @@ table_4 <- read_excel("data/Supplemental File 4_scRNAseq DE Ciliome in mesenchym
 table_5 <- read_excel("data/Supplemental File 5_scRNAseq DE Ciliome in Epithelia.xlsx",skip=7)
 table_6 <- read_excel("data/Supplemental File 6_scRNAseq DE Ciliome in Epithelia and Mesenchyme.xlsx",skip=7)
 table_7 <- read_excel("data/Supplemental File 7_scRNAseq Ciliary Genes with Expression Changes 12.6.21.xlsx",skip=6)
+
+header_1 <- read_excel("data/Supplemental File 1_Custom Ciliome 11.17.21.xlsx",range="A1:A7",col_names=F)
+header_1 <- header_1$...1
+
+header_2 <- read_excel("data/Supplemental File 2_Differentially Expressed Ciliome 1.19.22.manuallycurated.xlsx",range="A1:A7",col_names=F)
+header_2 <- header_2$...1
+
+header_4 <- read_excel("data/Supplemental File 4_scRNAseq DE Ciliome in mesenchyme clusters.xlsx",range="A1:A7",col_names=F)
+header_4 <- header_4$...1
+
+header_5 <- read_excel("data/Supplemental File 5_scRNAseq DE Ciliome in Epithelia.xlsx",range="A1:A7",col_names=F)
+header_5 <- header_5$...1
+
+header_6 <- read_excel("data/Supplemental File 6_scRNAseq DE Ciliome in Epithelia and Mesenchyme.xlsx",range="A1:A7",col_names=F)
+header_6 <- header_6$...1
+
+header_7 <- read_excel("data/Supplemental File 7_scRNAseq Ciliary Genes with Expression Changes 12.6.21.xlsx",range="A1:A6",col_names=F)
+header_7 <- header_7$...1
 
 ui <- fluidPage(
   
@@ -74,10 +94,28 @@ ui <- fluidPage(
 		"Datasets",
 		tabPanel("Curated Ciliome",
 			wellPanel(
+				h5(header_1[1]),
+				h5(header_1[2]),
+				h5(header_1[3]),
+				h5(header_1[4]),
+				h5(header_1[5]),
+				h5(header_1[6]),
+				h5(header_1[7])
+			),
+			wellPanel(
 				DT::dataTableOutput("dt_1")
 			)
 		),
 		tabPanel("Differentially Expressed Ciliome",
+			wellPanel(
+				h5(header_2[1]),
+				h5(header_2[2]),
+				h5(header_2[3]),
+				h5(header_2[4]),
+				h5(header_2[5]),
+				h5(header_2[6]),
+				h5(header_2[7])
+			),
 			wellPanel(
 				DT::dataTableOutput("dt_2")
 			)
@@ -119,20 +157,55 @@ ui <- fluidPage(
 		),
 		tabPanel("DE ciliary genes upregulated in mesenchymal clusters",
 			wellPanel(
+				h5(header_4[1]),
+				h5(header_4[2]),
+				h5(header_4[3]),
+				h5(header_4[4]),
+				h5(header_4[5]),
+				h5(header_4[6]),
+				h5(header_4[7])
+			),
+			wellPanel(
 				DT::dataTableOutput("dt_4")
 			)
 		),
 		tabPanel("DE ciliary genes upregulated in epithelial clusters",
+			wellPanel(
+				h5(header_5[1]),
+				h5(header_5[2]),
+				h5(header_5[3]),
+				h5(header_5[4]),
+				h5(header_5[5]),
+				h5(header_5[6]),
+				h5(header_5[7])
+			),
 			wellPanel(
 				DT::dataTableOutput("dt_5")
 			)
 		),
 		tabPanel("DE ciliary genes upregulated in both mesenchymal and epithelial clusters",
 			wellPanel(
+				h5(header_6[1]),
+				h5(header_6[2]),
+				h5(header_6[3]),
+				h5(header_6[4]),
+				h5(header_6[5]),
+				h5(header_6[6]),
+				h5(header_6[7])
+			),
+			wellPanel(
 				DT::dataTableOutput("dt_6")
 			)
 		),
 		tabPanel("Osteogenic Ciliome",
+			wellPanel(
+				h5(header_7[1]),
+				h5(header_7[2]),
+				h5(header_7[3]),
+				h5(header_7[4]),
+				h5(header_7[5]),
+				h5(header_7[6])
+			),
 			wellPanel(
 				DT::dataTableOutput("dt_7")
 			)
@@ -141,8 +214,8 @@ ui <- fluidPage(
 )
 
 server <- function(input, output) {
-	output$dt_1 <- DT::renderDataTable({DT::datatable(table_1)})
-	output$dt_2 <- DT::renderDataTable({DT::datatable(table_2)})
+	output$dt_1 <- DT::renderDataTable({DT::datatable(table_1,options=list(columnDefs = list(list(visible=FALSE, targets=c(ncol(table_1)))))) %>% formatStyle('Gene Symbol', 'colors',backgroundColor = styleEqual(c(TRUE), c('yellow')))})
+	output$dt_2 <- DT::renderDataTable({DT::datatable(table_2,options=list(columnDefs = list(list(visible=FALSE, targets=c(ncol(table_2)))))) %>% formatStyle('Gene Symbol', 'colors',backgroundColor = styleEqual(c(TRUE), c('yellow')))})
 	output$dt_3t_limb <- DT::renderDataTable({DT::datatable(table_3_tissue_limb)})
 	output$dt_3t_neural <- DT::renderDataTable({DT::datatable(table_3_tissue_neural)})
 	output$dt_3t_face <- DT::renderDataTable({DT::datatable(table_3_tissue_face)})
@@ -160,9 +233,9 @@ server <- function(input, output) {
 	output$dt_3n_dnt <- DT::renderDataTable({DT::datatable(table_3_neuroectodermal_dnt)})
 	output$dt_3n_vnt <- DT::renderDataTable({DT::datatable(table_3_neuroectodermal_vnt)})
 	output$dt_3n_dnt_vnt <- DT::renderDataTable({DT::datatable(table_3_neuroectodermal_dnt_vnt)})
-	output$dt_4 <- DT::renderDataTable({DT::datatable(table_4)})
-	output$dt_5 <- DT::renderDataTable({DT::datatable(table_5)})
-	output$dt_6 <- DT::renderDataTable({DT::datatable(table_6)})
+	output$dt_4 <- DT::renderDataTable({DT::datatable(table_4,options=list(columnDefs = list(list(visible=FALSE, targets=c(ncol(table_4)))))) %>% formatStyle('Gene Symbol', 'colors',backgroundColor = styleEqual(c(TRUE), c('yellow')))})
+	output$dt_5 <- DT::renderDataTable({DT::datatable(table_5,options=list(columnDefs = list(list(visible=FALSE, targets=c(ncol(table_5)))))) %>% formatStyle('Gene Symbol', 'colors',backgroundColor = styleEqual(c(TRUE), c('yellow')))})
+	output$dt_6 <- DT::renderDataTable({DT::datatable(table_6,options=list(columnDefs = list(list(visible=FALSE, targets=c(ncol(table_6)))))) %>% formatStyle('Gene Symbol', 'colors',backgroundColor = styleEqual(c(TRUE), c('yellow')))})
 	output$dt_7 <- DT::renderDataTable({DT::datatable(table_7)})
 }
 

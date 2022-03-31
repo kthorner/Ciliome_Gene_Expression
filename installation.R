@@ -2,3 +2,5 @@ if (!require("shiny")) install.packages("shiny", repos="http://cran.us.r-project
 if (!require("shinyWidgets")) install.packages("shinyWidgets", repos="http://cran.us.r-project.org")
 if (!require("DT")) install.packages("DT", repos="http://cran.us.r-project.org")
 if (!require("readxl")) install.packages("readxl", repos="http://cran.us.r-project.org")
+if (!require("tidyxl")) install.packages("tidyxl", repos="http://cran.us.r-project.org")
+if (!require("magrittr")) install.packages("magrittr", repos="http://cran.us.r-project.org")
