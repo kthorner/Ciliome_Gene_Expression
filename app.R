@@ -97,13 +97,15 @@ ui <- fluidPage(
 		"Datasets",
 		tabPanel("Curated Ciliome",
 			wellPanel(
-				h5(header_1[1]),
-				h5(header_1[2]),
-				h5(header_1[3]),
-				h5(header_1[4]),
-				h5(header_1[5]),
-				h5(header_1[6]),
-				h5(header_1[7])
+				tags$ul(
+					tags$li(header_1[1]),
+					tags$li(header_1[2]),
+					tags$li(header_1[3]),
+					tags$li(header_1[4]),
+					tags$li(header_1[5]),
+					tags$li(header_1[6]),
+					tags$li(header_1[7])
+				)
 			),
 			wellPanel(
 				DT::dataTableOutput("dt_1")
