@@ -87,9 +87,7 @@ ui <- fluidPage(
     						tags$li("Wheway, G., et al., An siRNA-based functional genomics screen for the identification of regulators of ciliogenesis and ciliopathy genes. Nat Cell Biol, 2015. 17(8): p. 1074-1087.")
     					),
     					br(),
-    					br(),
-    					p("Contact us:"),
-    					p("Samantha Brugmann, Samantha.Brugmann@cchmc.org")
+    					br()
 		    		)
 		    	),
 		    	column(4,
@@ -97,6 +95,13 @@ ui <- fluidPage(
             		)
             	)
             )
+        ),
+        tabPanel(
+        	"About",
+	    	wellPanel (
+				p("Contact us:"),
+				p("Samantha Brugmann, Samantha.Brugmann@cchmc.org")
+			)
         ),
 		"Datasets",
 		tabPanel("Curated Ciliome",
