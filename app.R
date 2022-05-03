@@ -25,6 +25,11 @@ ui <- fluidPage(
 		color = c("#e9edff")
 	),
 
+	tags$head(tags$style(".dataTables_wrapper .dt-buttons {
+		float:none; 
+		text-align:center;}"
+	)),
+
 	titlePanel("Ciliome Gene Expression Reference"),
 	
 	navlistPanel(
@@ -113,10 +118,13 @@ ui <- fluidPage(
 server <- function(input, output) {
 	output$dt_1 <- DT::renderDataTable({DT::datatable(
 		gene_table,
+		filter = "top",
+		extensions = 'Buttons',
 		options = list(
-		dom = "l<'search'>rtip"
+		dom = "l<'search'>Brtip",
+		buttons = c('copy', 'csv', 'excel')
 		),
-		callback = JS(callback)
+		callback = JS(callback),
 		)}, server = FALSE)
 }
 
