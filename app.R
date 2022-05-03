@@ -10,11 +10,20 @@ library(magrittr)
 gene_meta <- read_excel("data/gene_table.xlsx",sheet = 1,col_names = c("Column","Description"))
 gene_table <- read_excel("data/gene_table.xlsx",sheet = 2)
 
+callback <- '
+$("div.search").append($("#mySearch"));
+$("#mySearch").on("keyup redraw", function(){
+  var splits = $("#mySearch").val().split(",").filter(function(x){return x !=="";})
+  var searchString = "(" + splits.join("|") + ")";
+  table.search(searchString, true).draw(true);
+});
+'
+
 ui <- fluidPage(
   
-  setBackgroundColor(
-    color = c("#e9edff")
-  ),
+	setBackgroundColor(
+		color = c("#e9edff")
+	),
 
 	titlePanel("Ciliome Gene Expression Reference"),
 	
@@ -59,21 +68,56 @@ ui <- fluidPage(
         ),
 		tabPanel(
 			"Database",
+			tags$head(tags$style(HTML(".search {float: right;}"))),
+			tags$input(type = "text", id = "mySearch", placeholder = "Search"),
+			DT::dataTableOutput("dt_1")
+		),
+		tabPanel(
+			"Legend",
 			wellPanel(
 				tags$ul(
-					tags$li(gene_meta)
+					tags$li(tags$b(colnames(gene_table)[1]),paste0(": ",gene_meta$Description[1])),
+					tags$li(tags$b(colnames(gene_table)[2]),paste0(": ",gene_meta$Description[2])),
+					tags$li(tags$b(colnames(gene_table)[3]),paste0(": ",gene_meta$Description[3])),
+					tags$li(tags$b(colnames(gene_table)[4]),paste0(": ",gene_meta$Description[4])),
+					tags$li(tags$b(colnames(gene_table)[5]),paste0(": ",gene_meta$Description[5])),
+					tags$li(tags$b(colnames(gene_table)[6]),paste0(": ",gene_meta$Description[6])),
+					tags$li(tags$b(colnames(gene_table)[7]),paste0(": ",gene_meta$Description[7])),
+					tags$li(tags$b(colnames(gene_table)[8]),paste0(": ",gene_meta$Description[8])),
+					tags$li(tags$b(colnames(gene_table)[9]),paste0(": ",gene_meta$Description[9])),
+					tags$li(tags$b(colnames(gene_table)[10]),paste0(": ",gene_meta$Description[10])),
+					tags$li(tags$b(colnames(gene_table)[11]),paste0(": ",gene_meta$Description[11])),
+					tags$li(tags$b(colnames(gene_table)[12]),paste0(": ",gene_meta$Description[12])),
+					tags$li(tags$b(colnames(gene_table)[13]),paste0(": ",gene_meta$Description[13])),
+					tags$li(tags$b(colnames(gene_table)[14]),paste0(": ",gene_meta$Description[14])),
+					tags$li(tags$b(colnames(gene_table)[15]),paste0(": ",gene_meta$Description[15])),
+					tags$li(tags$b(colnames(gene_table)[16]),paste0(": ",gene_meta$Description[16])),
+					tags$li(tags$b(colnames(gene_table)[17]),paste0(": ",gene_meta$Description[17])),
+					tags$li(tags$b(colnames(gene_table)[18]),paste0(": ",gene_meta$Description[18])),
+					tags$li(tags$b(colnames(gene_table)[19]),paste0(": ",gene_meta$Description[19])),
+					tags$li(tags$b(colnames(gene_table)[20]),paste0(": ",gene_meta$Description[20])),
+					tags$li(tags$b(colnames(gene_table)[21]),paste0(": ",gene_meta$Description[21])),
+					tags$li(tags$b(colnames(gene_table)[22]),paste0(": ",gene_meta$Description[22])),
+					tags$li(tags$b(colnames(gene_table)[23]),paste0(": ",gene_meta$Description[23])),
 				)
-			),
-			wellPanel(
-				DT::dataTableOutput("dt_1")
 			)
-		)
-		
+		),
+		tabPanel("Expression",
+			wellPanel(
+				p("Expression")
+			)
+		)	
 	)  
 )
 
 server <- function(input, output) {
-	output$dt_1 <- DT::renderDataTable({DT::datatable(gene_table)})
+	output$dt_1 <- DT::renderDataTable({DT::datatable(
+		gene_table,
+		options = list(
+		dom = "l<'search'>rtip"
+		),
+		callback = JS(callback)
+		)}, server = FALSE)
 }
 
 shinyApp(ui = ui, server = server)
