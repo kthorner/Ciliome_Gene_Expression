@@ -52,12 +52,13 @@ ui <- fluidPage(
         ),
         tabPanel(
         	"About",
-	    	wellPanel (
+	    	wellPanel(
 				p("Contact us:"),
 				p("Samantha Brugmann, Samantha.Brugmann@cchmc.org")
 			)
         ),
-		tabPanel("Database",
+		tabPanel(
+			"Database",
 			wellPanel(
 				tags$ul(
 					tags$li(gene_meta)
@@ -73,5 +74,6 @@ ui <- fluidPage(
 
 server <- function(input, output) {
 	output$dt_1 <- DT::renderDataTable({DT::datatable(gene_table)})
+}
 
 shinyApp(ui = ui, server = server)
