@@ -6,9 +6,12 @@ library(DT)
 library(readxl)
 library(tidyxl)
 library(magrittr)
+library(ggplot2)
 
 gene_meta <- read_excel("data/gene_table.xlsx",sheet = 1,col_names = c("Column","Description"))
 gene_table <- read_excel("data/gene_table.xlsx",sheet = 2)
+tpm_data <- read.table("data/tpm_data.txt",sep="\t",header = T)
+gene_autocomplete <- gene_table$mouse_symbol
 
 callback <- '
 $("div.search").append($("#mySearch"));
@@ -109,7 +112,17 @@ ui <- fluidPage(
 		),
 		tabPanel("Expression",
 			wellPanel(
-				p("Expression")
+			  selectizeInput(
+			    inputId = 'gene_search',
+			    label = 'Gene search',
+			    choices = gene_autocomplete,
+			    selected = NULL,
+			    multiple = FALSE,
+			    options = list(create = FALSE)
+			  )
+			),
+			wellPanel(
+				plotOutput("violin_plot")
 			)
 		)	
 	)  
@@ -119,13 +132,18 @@ server <- function(input, output) {
 	output$dt_1 <- DT::renderDataTable({DT::datatable(
 		gene_table,
 		filter = "top",
-		extensions = 'Buttons',
 		options = list(
-		dom = "l<'search'>Brtip",
-		buttons = c('copy', 'csv', 'excel')
+		dom = "l<'search'>rtip"
 		),
 		callback = JS(callback),
 		)}, server = FALSE)
+
+	output$violin_plot <- renderPlot({ 
+		gene_search <- input$gene_search
+		tpm_gene <- tpm_data[tpm_data$Gene == gene_search,]
+		tpm_gene$Tissue <- sapply(tpm_gene$sample, function(x) substr(x,1,nchar(x)-2))
+		ggplot(tpm_gene, aes(x=`Tissue`, y=`value`, color=`Tissue`)) + geom_violin() + NoLegend() + ggtitle(paste0(gene_search," expression")) + geom_jitter(shape=16, position=position_jitter(0.2))
+		})
 }
 
 shinyApp(ui = ui, server = server)
