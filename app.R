@@ -13,15 +13,6 @@ gene_table <- read_excel("data/gene_table.xlsx",sheet = 2)
 tpm_data <- read.table("data/tpm_data.txt",sep="\t",header = T)
 gene_autocomplete <- gene_table$mouse_symbol
 
-callback <- '
-$("div.search").append($("#mySearch"));
-$("#mySearch").on("keyup redraw", function(){
-  var splits = $("#mySearch").val().split(",").filter(function(x){return x !=="";})
-  var searchString = "(" + splits.join("|") + ")";
-  table.search(searchString, true).draw(true);
-});
-'
-
 ui <- fluidPage(
   
 	setBackgroundColor(
@@ -71,13 +62,14 @@ ui <- fluidPage(
         	"About",
 	    	wellPanel(
 				p("Contact us:"),
-				p("Samantha Brugmann, Samantha.Brugmann@cchmc.org")
+				p("Samantha Brugmann, Samantha.Brugmann@cchmc.org"),
+				br(),
+				p("Developed by Konrad Thorner"),
+				p("For technical issues please see the ", a(href="https://github.com/kthorner/Ciliome_Gene_Expression", "GitHub page"))
 			)
         ),
 		tabPanel(
 			"Database",
-			tags$head(tags$style(HTML(".search {float: right;}"))),
-			tags$input(type = "text", id = "mySearch", placeholder = "Search"),
 			DT::dataTableOutput("dt_1")
 		),
 		tabPanel(
@@ -132,17 +124,20 @@ server <- function(input, output) {
 	output$dt_1 <- DT::renderDataTable({DT::datatable(
 		gene_table,
 		filter = "top",
+		extensions = c('Buttons'),
 		options = list(
-		dom = "l<'search'>rtip"
-		),
-		callback = JS(callback),
-		)}, server = FALSE)
+		columnDefs = list(list(
+    	targets = c(3:10,11,13,17,19,20,21,23), visible = FALSE)),
+		dom = "Blfrtip",
+		buttons = c('colvis','csv','excel'),
+		search = list(regex = TRUE)
+		))}, server = FALSE)
 
 	output$violin_plot <- renderPlot({ 
 		gene_search <- input$gene_search
 		tpm_gene <- tpm_data[tpm_data$Gene == gene_search,]
 		tpm_gene$Tissue <- sapply(tpm_gene$sample, function(x) substr(x,1,nchar(x)-2))
-		ggplot(tpm_gene, aes(x=`Tissue`, y=`value`, color=`Tissue`)) + geom_violin() + NoLegend() + ggtitle(paste0(gene_search," expression")) + geom_jitter(shape=16, position=position_jitter(0.2))
+		ggplot(tpm_gene, aes(x=`Tissue`, y=`value`, color=`Tissue`)) + geom_violin() + theme_bw() + theme(legend.position = "none") + ggtitle(paste0(gene_search," expression")) + geom_jitter(shape=16, position=position_jitter(0.2))
 		})
 }
 
