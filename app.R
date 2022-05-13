@@ -69,12 +69,19 @@ ui <- fluidPage(
 			)
         ),
 		tabPanel(
-			"Database",
-			DT::dataTableOutput("dt_1")
-		),
-		tabPanel(
-			"Legend",
+			"Help",
 			wellPanel(
+				h2("Database Instructions"),
+				tags$ul(
+					tags$li("Some columns are hidden by default. Additional columns can be viewed using the 'Column Visibility' dropdown"),
+					tags$li("Results can be saved using the CSV and Excel buttons for further analysis"),
+					tags$li("Searches can include regular expressions, which can be chained together"),
+					tags$li("Search for multiple entries by separating with ' | '. Ex. CD4|CD8"),
+					tags$li("Search for entries that start with a pattern using ' ^ '. Ex. ^A returns all entries starting with A")
+				)
+			),
+			wellPanel(
+				h2("Database Legend"),
 				tags$ul(
 					tags$li(tags$b(colnames(gene_table)[1]),paste0(": ",gene_meta$Description[1])),
 					tags$li(tags$b(colnames(gene_table)[2]),paste0(": ",gene_meta$Description[2])),
@@ -98,9 +105,13 @@ ui <- fluidPage(
 					tags$li(tags$b(colnames(gene_table)[20]),paste0(": ",gene_meta$Description[20])),
 					tags$li(tags$b(colnames(gene_table)[21]),paste0(": ",gene_meta$Description[21])),
 					tags$li(tags$b(colnames(gene_table)[22]),paste0(": ",gene_meta$Description[22])),
-					tags$li(tags$b(colnames(gene_table)[23]),paste0(": ",gene_meta$Description[23])),
+					tags$li(tags$b(colnames(gene_table)[23]),paste0(": ",gene_meta$Description[23]))
 				)
 			)
+		),
+		tabPanel(
+			"Database",
+			DT::dataTableOutput("dt_1")
 		),
 		tabPanel("Expression",
 			wellPanel(
