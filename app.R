@@ -13,6 +13,15 @@ gene_table <- read_excel("data/gene_table.xlsx",sheet = 2)
 tpm_data <- read.table("data/tpm_data.txt",sep="\t",header = T)
 gene_autocomplete <- gene_table$mouse_symbol
 
+callback <- '
+$("div.search").append($("#mySearch"));
+$("#mySearch").on("keyup redraw", function(){
+  var splits = $("#mySearch").val().split(",").filter(function(x){return x !=="";})
+  var searchString = "(" + splits.join("|") + ")";
+  table.columns(2).search(searchString, true).draw(true);
+});
+'
+
 ui <- fluidPage(
   
 	setBackgroundColor(
@@ -39,7 +48,7 @@ ui <- fluidPage(
 						br(),
 						p("Herein, we consolidated three established ciliary databases: ", a(href="http://www.syscilia.org/goldstandard.shtml", "The Syscilia Gold Standard", .noWS = "outside"), ", ", a(href="https://tbb.bio.uu.nl/john/syscilia/ciliacarta/", "CiliaCarta", .noWS = "outside"), ", and ", a(href="http://cildb.i2bc.paris-saclay.fr", "Cildb", .noWS = "outside"), " [1,2] with two ciliogenesis modulator screens [3, 4] to generate a curated ciliome. Expression of genes that make up the ciliome was then profiled across various embryonic tissues and time points to test the hypothesis that the ciliome is heterogenous throughout development.", .noWS = c("after-begin", "before-end")),
 						br(),
-						p("Here, we provide access to our transcriptomics resources detailing tissues-specific ciliome heterogeneity in an easily searchable database."),
+						p("Here, we provide access to our transcriptomics resources detailing tissue-specific ciliome heterogeneity in an easily searchable database."),
 						br(),
 						br(),
 						tags$ol(
@@ -53,7 +62,7 @@ ui <- fluidPage(
 		    		)
 		    	),
 		    	column(4,
-            		img(src = "ciliome_figure.jpg", height = 360, width = 300
+            		img(src = "abstract.jpg", height = 380, width = 340
             		)
             	)
             )
@@ -63,6 +72,7 @@ ui <- fluidPage(
 	    	wellPanel(
 				p("Contact us:"),
 				p("Samantha Brugmann, Samantha.Brugmann@cchmc.org"),
+				p("Kevin Peterson, kevin.peterson@jax.org"),
 				br(),
 				p("Developed by Konrad Thorner"),
 				p("For technical issues please see the ", a(href="https://github.com/kthorner/Ciliome_Gene_Expression", "GitHub page"))
@@ -73,11 +83,12 @@ ui <- fluidPage(
 			wellPanel(
 				h2("Database Instructions"),
 				tags$ul(
-					tags$li("Some columns are hidden by default. Additional columns can be viewed using the 'Column Visibility' dropdown"),
-					tags$li("Results can be saved using the CSV and Excel buttons for further analysis"),
-					tags$li("Searches can include regular expressions, which can be chained together"),
-					tags$li("Search for multiple entries by separating with ' | '. Ex. CD4|CD8"),
-					tags$li("Search for entries that start with a pattern using ' ^ '. Ex. ^A returns all entries starting with A")
+					tags$li("Some columns are hidden by default. Additional columns can be viewed using the 'Column Visibility' dropdown."),
+					tags$li("Results can be saved using the CSV and Excel buttons for further analysis."),
+					tags$li("View genes of interest by entering one or more comma-separated genes in the 'Gene Search' box."),
+					tags$li("For more advanced searches, use the filters at the top of each column. Regular expressions can also be applied."),
+					tags$li("Search for multiple entries by separating with ' | '. Ex. CD4|CD8."),
+					tags$li("Search for entries that start with a pattern using ' ^ '. Ex. ^A returns all entries starting with A.")
 				)
 			),
 			wellPanel(
@@ -111,13 +122,14 @@ ui <- fluidPage(
 		),
 		tabPanel(
 			"Database",
+			tags$input(type = "text", id = "mySearch", placeholder = "Gene Search"),
 			DT::dataTableOutput("dt_1")
 		),
 		tabPanel("Expression",
 			wellPanel(
 			  selectizeInput(
 			    inputId = 'gene_search',
-			    label = 'Gene search',
+			    label = 'Gene Search',
 			    choices = gene_autocomplete,
 			    selected = NULL,
 			    multiple = FALSE,
@@ -136,10 +148,11 @@ server <- function(input, output) {
 		gene_table,
 		filter = "top",
 		extensions = c('Buttons'),
+		callback=JS(callback),
 		options = list(
 		columnDefs = list(list(
-    	targets = c(3:10,11,13,17,19,20,21,23), visible = FALSE)),
-		dom = "Blfrtip",
+    	targets = c(3:11,13,17,19,20,21,23), visible = FALSE)),
+    	dom = "<'row'<'col-sm-3'l><'col-sm-6'B><'col-sm-3'<'search'>>><'row'<'col-sm-12'tr>><'row'<'col-sm-5'i><'col-sm-7'p>>",
 		buttons = c('colvis','csv','excel'),
 		search = list(regex = TRUE)
 		))}, server = FALSE)
