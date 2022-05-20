@@ -1,6 +1,6 @@
 # Ciliome_Gene_Expression
 
-To use please install R-Studio and the package "shiny". Then run the following:
+To use, please install R-Studio and the package "shiny". Then run the following:
 
 ```
 library(shiny)
