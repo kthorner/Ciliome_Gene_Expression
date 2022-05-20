@@ -12,6 +12,7 @@ gene_meta <- read_excel("data/gene_table.xlsx",sheet = 1,col_names = c("Column",
 gene_table <- read_excel("data/gene_table.xlsx",sheet = 2)
 tpm_data <- read.table("data/tpm_data.txt",sep="\t",header = T)
 gene_autocomplete <- gene_table$mouse_symbol
+level_order <- c("Head","Limb","Trunk","Dorsal NT","Ventral NT","MNP","FNP","MXP","Limbs","Lung","Palate")
 
 callback <- '
 $("div.search").append($("#mySearch"));
@@ -160,8 +161,7 @@ server <- function(input, output) {
 	output$violin_plot <- renderPlot({ 
 		gene_search <- input$gene_search
 		tpm_gene <- tpm_data[tpm_data$Gene == gene_search,]
-		tpm_gene$Tissue <- sapply(tpm_gene$sample, function(x) substr(x,1,nchar(x)-2))
-		ggplot(tpm_gene, aes(x=`Tissue`, y=`value`, color=`Tissue`)) + geom_violin() + xlab("\nTissue") + ylab("Expression\n") + theme_bw() + theme(legend.position = "none", axis.text=element_text(size=16),axis.title=element_text(size=18),plot.title = element_text(size=20)) + ggtitle(paste0(gene_search," expression")) + geom_jitter(shape=16, position=position_jitter(0.2))
+		ggplot(tpm_gene, aes(x= factor(Tissue, level=level_order), y=value, color=Time)) + geom_violin() + xlab("\nTissue") + ylab("Expression\n") + theme_bw() + theme(axis.text=element_text(size=16),axis.title=element_text(size=18),plot.title = element_text(size=20)) + ggtitle(paste0(gene_search," expression")) + geom_jitter(shape=16, position=position_jitter(0.2))
 		})
 }
 
