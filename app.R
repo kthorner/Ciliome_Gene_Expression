@@ -88,8 +88,8 @@ ui <- fluidPage(
 					tags$li("Results can be saved using the CSV and Excel buttons for further analysis."),
 					tags$li("View genes of interest by entering one or more comma-separated genes in the 'Gene Search' box."),
 					tags$li("For more advanced searches, use the filters at the top of each column. Regular expressions can also be applied."),
-					tags$li("Search for multiple entries by separating with ' | '. Ex. CD4|CD8."),
-					tags$li("Search for entries that start with a pattern using ' ^ '. Ex. ^A returns all entries starting with A.")
+					tags$li("Search for multiple entries by separating with ' | '. Ex. Foxj1|Dnah9"),
+					tags$li("Search for entries that start with a pattern using ' ^ '. Ex. ^A returns all entries starting with A")
 				)
 			),
 			wellPanel(
@@ -161,7 +161,7 @@ server <- function(input, output) {
 	output$violin_plot <- renderPlot({ 
 		gene_search <- input$gene_search
 		tpm_gene <- tpm_data[tpm_data$Gene == gene_search,]
-		ggplot(tpm_gene, aes(x= factor(Tissue, level=level_order), y=value, color=Time)) + geom_violin() + xlab("\nTissue") + ylab("Expression\n") + theme_bw() + theme(axis.text=element_text(size=16),axis.title=element_text(size=18),plot.title = element_text(size=20)) + ggtitle(paste0(gene_search," expression")) + geom_jitter(shape=16, position=position_jitter(0.2))
+		ggplot(tpm_gene, aes(x= factor(Tissue, level=level_order), y=value, color=Time)) + geom_violin() + xlab("\nTissue") + ylab("Expression\n") + theme_bw() + theme(axis.text=element_text(size=16),axis.title=element_text(size=16),plot.title = element_text(size=20),legend.text=element_text(size=12)) + ggtitle(paste0(gene_search," expression")) + geom_jitter(shape=16, position=position_jitter(0.2))
 		})
 }
 
