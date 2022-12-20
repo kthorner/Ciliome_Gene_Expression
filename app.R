@@ -117,12 +117,18 @@ ui <- fluidPage(
 					tags$li(tags$b(colnames(gene_table)[20]),paste0(": ",gene_meta$Description[20])),
 					tags$li(tags$b(colnames(gene_table)[21]),paste0(": ",gene_meta$Description[21])),
 					tags$li(tags$b(colnames(gene_table)[22]),paste0(": ",gene_meta$Description[22])),
-					tags$li(tags$b(colnames(gene_table)[23]),paste0(": ",gene_meta$Description[23])),					
+					tags$li(tags$b(colnames(gene_table)[23]),paste0(": ",gene_meta$Description[23])),
 					tags$li(tags$b(colnames(gene_table)[24]),paste0(": ",gene_meta$Description[24])),
 					tags$li(tags$b(colnames(gene_table)[25]),paste0(": ",gene_meta$Description[25])),
 					tags$li(tags$b(colnames(gene_table)[26]),paste0(": ",gene_meta$Description[26])),
 					tags$li(tags$b(colnames(gene_table)[27]),paste0(": ",gene_meta$Description[27])),
 					tags$li(tags$b(colnames(gene_table)[28]),paste0(": ",gene_meta$Description[28]))
+				),
+				br(),
+				tags$ol(
+						tags$li("Ishikawa, H., et al., Proteomic analysis of mammalian primary cilia. Curr Biol, 2012. 22(5): p. 414-9."), 
+						tags$li("Mick, D.U., et al., Proteomics of Primary Cilia by Proximity Labeling. Dev Cell, 2015. 35(4): p. 497-512."), 
+						tags$li("May, E.A., et al., Time-resolved proteomics profiling of the ciliary Hedgehog response. J Cell Biol, 2021. 220(5)."),
 				)
 			)
 		),
